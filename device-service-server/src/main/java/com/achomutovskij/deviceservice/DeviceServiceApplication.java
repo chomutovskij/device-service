@@ -25,12 +25,15 @@ import com.achomutovskij.deviceservice.management.api.DeviceManagementServiceEnd
 import com.achomutovskij.deviceservice.resources.DeviceBookingResource;
 import com.achomutovskij.deviceservice.resources.DeviceInfoResource;
 import com.achomutovskij.deviceservice.resources.DeviceManagementResource;
+import com.google.common.base.Strings;
 import com.palantir.conjure.java.api.config.ssl.SslConfiguration;
 import com.palantir.conjure.java.api.errors.ErrorType;
 import com.palantir.conjure.java.api.errors.ServiceException;
 import com.palantir.conjure.java.config.ssl.SslSocketFactories;
 import com.palantir.conjure.java.undertow.runtime.ConjureHandler;
 import com.palantir.logsafe.SafeArg;
+import com.palantir.logsafe.logger.SafeLogger;
+import com.palantir.logsafe.logger.SafeLoggerFactory;
 import io.undertow.Handlers;
 import io.undertow.Undertow;
 import java.io.IOException;
@@ -40,6 +43,8 @@ import javax.net.ssl.SSLContext;
 import okhttp3.OkHttpClient;
 
 public final class DeviceServiceApplication {
+
+    private static final SafeLogger log = SafeLoggerFactory.get(DeviceServiceApplication.class);
 
     private static final String KEY_STORE_PATH = "src/test/resources/certs/keystore.jks";
     private static final String TRUSTSTORE_PATH = "src/test/resources/certs/truststore.jks";
@@ -71,8 +76,13 @@ public final class DeviceServiceApplication {
                 SslConfiguration.of(Paths.get(TRUSTSTORE_PATH), Paths.get(KEY_STORE_PATH), KEYSTORE_PASSWORD);
         SSLContext sslContext = SslSocketFactories.createSslContext(sslConfig);
 
-        Optional<RapidApiClient> rapidApiClientOptional =
-                conf.getApiKey().map(apiKey -> new RapidApiClient(new OkHttpClient(), apiKey));
+        Optional<RapidApiClient> rapidApiClientOptional = conf.getApiKey()
+                .filter(apiKey -> !Strings.isNullOrEmpty(apiKey))
+                .map(apiKey -> new RapidApiClient(new OkHttpClient(), apiKey));
+
+        if (rapidApiClientOptional.isEmpty()) {
+            log.warn("No API key is provided, will only use the CSV lookup.");
+        }
 
         Undertow server = Undertow.builder()
                 .addHttpsListener(conf.getPort(), conf.getHost(), sslContext)
