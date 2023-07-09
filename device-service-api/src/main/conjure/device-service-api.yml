@@ -1,0 +1,142 @@
+types:
+  definitions:
+    default-package: com.achomutovskij.deviceservice.api
+    objects:
+
+      DeviceInfo:
+        fields:
+          id: integer
+          name: string
+          available: boolean
+          lastBookedPersonName: optional<string>
+          lastBookedTime: optional<datetime>
+          technology: optional<string>
+          twoGBands: optional<string>
+          threeGBands: optional<string>
+          fourGBands: optional<string>
+
+      BookingRequest:
+        fields:
+          person: string
+          deviceName: optional<string>
+          deviceId: optional<integer>
+
+    errors:
+      DeviceNameNotFound:
+        namespace: Device
+        code: NOT_FOUND
+        safe-args:
+          name: string
+      DeviceIdNotFound:
+        namespace: Device
+        code: NOT_FOUND
+        safe-args:
+          id: integer
+      RequestMustHaveEitherDeviceIdOrName:
+        namespace: Booking
+        code: INVALID_ARGUMENT
+      DeviceNotAvailable:
+        namespace: Booking
+        code: INVALID_ARGUMENT
+      DifferentPersonBookedDevicePreviously:
+        namespace: Booking
+        code: INVALID_ARGUMENT
+      DeviceIsAvailable:
+        namespace: Booking
+        code: INVALID_ARGUMENT
+      NoPersonWithGivenBookedDevice:
+        namespace: Booking
+        code: INVALID_ARGUMENT
+
+services:
+  DeviceManagementService:
+    name: Device Management Service
+    package: com.achomutovskij.deviceservice.management.api
+    base-path: /v1/management
+    docs: |
+      APIs for registering new devices and removing devices which are no longer available
+
+    endpoints:
+      createDevice:
+        http: POST /create/{name}
+        args:
+          name: string
+        docs: |
+          Creates a new device with the given name.
+
+          @param name
+                 The name of the device
+
+      deleteDevice:
+        http: DELETE /delete/{id}
+        args:
+          id: integer
+        docs: |
+          Deletes the device with the given id.
+
+          @param name
+                 The id of the device
+
+      deleteAllDevices:
+        http: DELETE /delete/all
+        docs: |
+          Deletes all the device in DB.
+
+  DeviceInfoService:
+    name: Device Info Service
+    package: com.achomutovskij.deviceservice.info.api
+    base-path: /v1/info
+    docs: |
+      APIs for getting the info about the devices
+    endpoints:
+      getDevicesByName:
+        http: GET /byname/{name}
+        args:
+          name: string
+        returns: list<DeviceInfo>
+        docs: |
+          Retrieves the device(s) for the given name.
+
+          @param name
+                 The name of the device
+
+      getDeviceById:
+        http: GET /byid/{id}
+        args:
+          id: integer
+        returns: DeviceInfo
+        docs: |
+          Retrieves a device for the given id.
+
+          @param name
+                 The id of the device
+
+      getAllDevices:
+        http: GET /all
+        returns: list<DeviceInfo>
+
+      getAllAvailableDevices:
+        http: GET /all/available
+        returns: list<DeviceInfo>
+
+  DeviceBookingService:
+    name: Device Booking Service
+    package: com.achomutovskij.deviceservice.booking.api
+    base-path: /v1/booking
+    docs: |
+      APIs for booking the devices
+
+    endpoints:
+      bookDevice:
+        http: PUT /reserve
+        args:
+          bookDeviceRequest: BookingRequest
+        docs: |
+          Books the device with the given id or name.
+
+      returnDevice:
+        http: PUT /return
+        args:
+          returnDeviceRequest: BookingRequest
+        docs: |
+          Returns the device with the given id or name.

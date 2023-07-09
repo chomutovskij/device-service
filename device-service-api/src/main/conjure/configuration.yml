@@ -1,0 +1,10 @@
+types:
+  definitions:
+    default-package: com.achomutovskij.deviceservice
+    objects:
+      Configuration:
+        fields:
+          port: integer
+          host: string
+          first-startup-register-devices: list<string>
+          api-key: optional<string>

@@ -1,0 +1,5 @@
+port: 8345
+host: 0.0.0.0
+first-startup-register-devices:
+  - "Samsung Galaxy S9"
+api-key: "changeMe"

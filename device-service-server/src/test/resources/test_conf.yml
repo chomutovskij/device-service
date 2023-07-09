@@ -1,0 +1,14 @@
+port: 8345
+host: 0.0.0.0
+first-startup-register-devices:
+  - "Samsung Galaxy S9"
+  - "Samsung Galaxy S8"
+  - "Samsung Galaxy S8"
+  - "Motorola Nexus 6"
+  - "OnePlus 9"
+  - "Apple iPhone 13"
+  - "Apple iPhone 12"
+  - "Apple iPhone 11"
+  - "Apple iPhone X"
+  - "Nokia 3310"
+api-key: "some-fake-api-key"
