@@ -21,6 +21,7 @@ import com.github.benmanes.caffeine.cache.LoadingCache;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.palantir.logsafe.Preconditions;
 import com.palantir.logsafe.logger.SafeLogger;
 import com.palantir.logsafe.logger.SafeLoggerFactory;
 import java.io.IOException;
@@ -40,8 +41,8 @@ public final class RapidApiClient {
     private final LoadingCache<String, Optional<GsmNetworkDetails>> deviceToApiLookupResultCache;
 
     public RapidApiClient(OkHttpClient okHttpClient, String rapidApiKey) {
-        this.okHttpClient = okHttpClient;
-        this.rapidApiKey = rapidApiKey;
+        this.okHttpClient = Preconditions.checkNotNull(okHttpClient, "OkHttpClient needs to be non-null");
+        this.rapidApiKey = Preconditions.checkNotNull(rapidApiKey, "API key must be non-null");
         this.deviceToApiLookupResultCache =
                 Caffeine.newBuilder().maximumSize(1_000).build(this::performNetworkRequest);
     }

@@ -21,6 +21,7 @@ import com.achomutovskij.deviceservice.api.DeviceErrors;
 import com.achomutovskij.deviceservice.api.DeviceInfo;
 import com.palantir.conjure.java.api.errors.ErrorType;
 import com.palantir.conjure.java.api.errors.ServiceException;
+import com.palantir.logsafe.Preconditions;
 import com.palantir.logsafe.SafeArg;
 import com.palantir.logsafe.logger.SafeLogger;
 import com.palantir.logsafe.logger.SafeLoggerFactory;
@@ -49,14 +50,14 @@ public final class DatabaseManager {
 
     public DatabaseManager(String jdbcUrl, List<String> prefillWithDevices) {
         HikariConfig config = new HikariConfig();
-        config.setJdbcUrl(jdbcUrl);
+        config.setJdbcUrl(Preconditions.checkNotNull(jdbcUrl, "JDBC url must be non-null"));
         this.dataSource = new HikariDataSource(config);
         this.readWriteLock = new ReentrantReadWriteLock();
 
         boolean tableWasAlreadyThere = ensureDbTableExist();
         if (!tableWasAlreadyThere) {
             log.info("About to populate the table with the devices");
-            for (String device : prefillWithDevices) {
+            for (String device : Preconditions.checkNotNull(prefillWithDevices, "Devices list must be non-null")) {
                 registerDevice(device);
             }
             log.info("Populated the table with {} devices", SafeArg.of("devices-list-size", prefillWithDevices.size()));
