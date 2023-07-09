@@ -269,27 +269,21 @@ public final class DatabaseManager {
             connection = dataSource.getConnection();
             connection.setAutoCommit(false); // start the transaction
 
-            String selectSql = getSelectQueryToFetchDeviceWithId(deviceId);
+            String selectSql = "SELECT * FROM devices WHERE id = ? AND lastBookedPersonName = ? AND available = 0;";
+
             try (PreparedStatement selectStatement = connection.prepareStatement(selectSql)) {
+                selectStatement.setInt(1, deviceId);
+                selectStatement.setString(2, person);
+
                 try (ResultSet resultSet = selectStatement.executeQuery()) {
                     if (resultSet.next()) {
-                        if (resultSet.getBoolean("available")) { // device with the given ID is available
-                            throw BookingErrors.deviceIsAvailable();
-                        }
-
-                        if (!Optional.ofNullable(resultSet.getString("name"))
-                                .map(nameInDb -> nameInDb.equalsIgnoreCase(person))
-                                .orElse(false)) {
-                            throw BookingErrors.differentPersonBookedDevicePreviously();
-                        }
-
                         String updateSql = "UPDATE devices SET available = ? WHERE id = ?";
                         try (PreparedStatement updateStatement = connection.prepareStatement(updateSql)) {
                             returnStatement(updateStatement, deviceId);
                             updateStatement.executeUpdate();
                         }
-                    } else { // device with the given ID not found
-                        throw DeviceErrors.deviceIdNotFound(deviceId);
+                    } else {
+                        throw BookingErrors.noPersonWithGivenBookedDevice();
                     }
                 }
             }

@@ -201,19 +201,25 @@ public class DeviceServiceApplicationTest {
     }
 
     @Test
-    public void bookByName() {
+    public void bookAndReturnByName() {
+        BookingRequest bookingRequest = BookingRequest.of("Andrej", "iPhone 14", OptionalInt.empty());
+
         deviceManagementService.createDevice("iPhone 14");
-        deviceBookingService.bookDevice(BookingRequest.of("Andrej", "iPhone 14", OptionalInt.empty()));
+        deviceBookingService.bookDevice(bookingRequest);
         assertThat(deviceInfoService.getAllAvailableDevices()).isEmpty();
         assertThat(deviceInfoService.getAllDevices()).hasSize(1);
 
         Assertions.assertThatRemoteExceptionThrownBy(() ->
                         deviceBookingService.bookDevice(BookingRequest.of("Peter", "iPhone 14", OptionalInt.empty())))
                 .isGeneratedFromErrorType(BookingErrors.DEVICE_NOT_AVAILABLE);
+
+        deviceBookingService.returnDevice(bookingRequest);
+        assertThat(deviceInfoService.getAllAvailableDevices()).hasSize(1);
+        assertThat(deviceInfoService.getAllDevices()).hasSize(1);
     }
 
     @Test
-    public void bookById() {
+    public void bookAndReturnById() {
         deviceManagementService.createDevice("iPhone 14");
 
         List<DeviceInfo> iPhone14DeviceList = deviceInfoService.getDevicesByName("iPhone 14");
@@ -231,6 +237,11 @@ public class DeviceServiceApplicationTest {
                         .deviceId(iphone14Id)
                         .build()))
                 .isGeneratedFromErrorType(BookingErrors.DEVICE_NOT_AVAILABLE);
+
+        deviceBookingService.returnDevice(
+                BookingRequest.builder().person("Peter").deviceId(iphone14Id).build());
+        assertThat(deviceInfoService.getAllAvailableDevices()).hasSize(1);
+        assertThat(deviceInfoService.getAllDevices()).hasSize(1);
     }
 
     @Test
