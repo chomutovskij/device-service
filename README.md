@@ -8,6 +8,7 @@
 - The service template used: [conjure-java-example](https://github.com/palantir/conjure-java-example)
 
 ## How to run locally
+### Running the server
 - clone the repo
 - `cd device-service`
 - `chmod 700 device-service-server/src/test/resources` (to be able to write to the database file) 
@@ -15,6 +16,10 @@
 - update the Rapid API token in the [var/conf.yml](device-service-server/var/conf/conf.yml#L14)
   - you can leave it as is, the service will fall back to the [gsmarena_dataset.csv](device-service-server/src/test/resources/gsmarena_dataset.csv) 
 - `./gradlew run`
+
+### Checking the state of DB
+- `sqlite3 database.db`
+- `SELECT * FROM devices;`
 
 ## APIs
 ### Device registration and deletion:
