@@ -1,13 +1,16 @@
 # device-service
 - A service to book the mobile devices and query information about them.
 - The service stores the current state of the world in [SQLite database](device-service-server/src/test/resources/database.db).
+  - Reads and writes to the database are thread safe.
 - The information about the devices is fetched from [Rapid API's Mobile Phone Specs Service](https://rapidapi.com/makingdatameaningful/api/mobile-phone-specs-database)
+  - The responses from Rapid API are cached in memory in the [Caffeine Cache](https://github.com/ben-manes/caffeine)  
 - Additionally, if the api token is not specified (or is invalid) in [var/conf.yml](device-service-server/var/conf/conf.yml#L14), the service will fall back to a scrapped GSM Arena Website Database (available at [Kaggle](https://www.kaggle.com/datasets/imprime/gsmarena-listed-brands)). The downloaded CSV is stored in [device-service/device-service-server/src/test/resources](device-service-server/src/test/resources/gsmarena_dataset.csv)
 - The service template used: [conjure-java-example](https://github.com/palantir/conjure-java-example)
 
 ## How to run locally
 - clone the repo
-- `chmod 700 device-service/device-service-server/src/test/resources` (to be able to write to the database file) 
+- `cd device-service`
+- `chmod 700 device-service-server/src/test/resources` (to be able to write to the database file) 
 - set `JAVA_HOME` to java 15
 - update the Rapid API token in the [var/conf.yml](device-service-server/var/conf/conf.yml#L14)
   - you can leave it as is, the service will fall back to the [gsmarena_dataset.csv](device-service-server/src/test/resources/gsmarena_dataset.csv) 
