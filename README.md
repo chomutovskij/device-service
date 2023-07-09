@@ -34,7 +34,7 @@ This service uses the following tools and libraries, please consult their respec
 * [gradle](https://gradle.org/) - a highly flexible build tool. Some of the gradle plugins applied are:
      *  [gradle-conjure](https://github.com/palantir/gradle-conjure) - a gradle plugin that contains tasks to generate conjure bindings.
      *  [gradle-baseline](https://github.com/palantir/gradle-baseline) - a gradle plugin for configuring code quality tools in builds and projects.
-* [dropwizard](https://www.dropwizard.io/1.3.5/docs/) - a simple framework for building web services
+* [dropwizard](https://www.dropwizard.io/en/stable/) - a simple framework for building web services
 
 ### Project Structure
 
@@ -56,8 +56,8 @@ This service uses the following tools and libraries, please consult their respec
         1. configures sub-projects with needed dependencies to generate java bindings. e.g. `device-service-api-jersey`
         2. configures `publishTypescript` task to generate `.npmrc` in the generated root folder, `device-service-api-typescript/src` for publishing the generated npm module.
         3. modifies the `conjure` extension to specify the package name under which the npm module will be published.
-    * device-service-api-jersey - the sub-project where all generated [service interfaces](https://github.com/palantir/conjure-java-example/blob/0.1.1/example-api/src/main/conjure/example-api.yml#L39) live.
-    * device-service-api-objects - the sub-project where all generated [object classes](https://github.com/palantir/conjure-java-example/blob/0.1.1/example-api/src/main/conjure/example-api.yml#L4) live.
+    * device-service-api-jersey - the sub-project where all generated [service interfaces](device-service-api/src/main/conjure/device-service-api.yml#L51) live.
+    * device-service-api-objects - the sub-project where all generated [object classes](device-service-api/src/main/conjure/device-service-api.yml#L4) live.
     * device-service-api-typescript - the sub-project where all generated typescript bindings live.
     * src/main/conjure - directory containing conjure definition yml files where recipe APIs are defined, please refer to [specification.md](https://github.com/palantir/conjure/blob/develop/docs/specification.md) for more details.
 
