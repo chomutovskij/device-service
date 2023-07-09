@@ -19,6 +19,7 @@ package com.achomutovskij.deviceservice.gsm;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.palantir.logsafe.logger.SafeLogger;
 import com.palantir.logsafe.logger.SafeLoggerFactory;
@@ -81,18 +82,25 @@ public final class RapidApiClient {
             String json = responseBody.string();
             Gson gson = new Gson();
             JsonObject jsonObject = gson.fromJson(json, JsonObject.class);
-            JsonObject gsmNetworkDetails = jsonObject.get("gsmNetworkDetails").getAsJsonObject();
 
-            return Optional.of(ImmutableGsmNetworkDetails.builder()
-                    .technology(gsmNetworkDetails.get("networkTechnology").getAsString())
-                    .twoGBands(gsmNetworkDetails.get("network2GBands").getAsString())
-                    .threeGBands(gsmNetworkDetails.get("network3GBands").getAsString())
-                    .fourGBands(gsmNetworkDetails.get("network4GBands").getAsString())
+            Optional<JsonObject> gsmNetworkDetailsOptional =
+                    Optional.ofNullable(jsonObject.get("gsmNetworkDetails")).map(JsonElement::getAsJsonObject);
+
+            return gsmNetworkDetailsOptional.map(gsmNetworkDetails -> ImmutableGsmNetworkDetails.builder()
+                    .technology(getStringWithKey(gsmNetworkDetails, "networkTechnology"))
+                    .twoGBands(getStringWithKey(gsmNetworkDetails, "network2GBands"))
+                    .threeGBands(getStringWithKey(gsmNetworkDetails, "network3GBands"))
+                    .fourGBands(getStringWithKey(gsmNetworkDetails, "network4GBands"))
                     .build());
-
         } catch (IOException | RuntimeException e) {
             log.error("Failed to get or parse the response from Rapid API", e);
             return Optional.empty();
         }
+    }
+
+    private static String getStringWithKey(JsonObject gsmNetworkDetails, String key) {
+        return Optional.ofNullable(gsmNetworkDetails.get(key))
+                .map(JsonElement::getAsString)
+                .orElse("");
     }
 }
