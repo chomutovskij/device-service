@@ -11,9 +11,9 @@
 ### Running the server
 - clone the repo
 - `cd device-service`
-- `chmod 700 device-service-server/src/test/resources` (to be able to write to the database file) 
 - set `JAVA_HOME` to java 15
 - update the Rapid API token in the [var/conf.yml](device-service-server/var/conf/conf.yml#L14)
+  - `vim device-service-server/var/conf/conf.yml` (and replace `api-key` value)
   - you can leave it as is, the service will fall back to the [gsmarena_dataset.csv](device-service-server/src/test/resources/gsmarena_dataset.csv) 
 - `./gradlew run`
 
@@ -25,7 +25,7 @@
 ### Device registration and deletion:
 ```
 curl -X POST "http://localhost:8346/api/v1/management/create/Samsung%20Galaxy%20S5"
-curl -X DELETE "http://localhost:8346/api/v1/management/delete/1"
+curl -X DELETE "http://localhost:8346/api/v1/management/delete/11"
 curl -X DELETE "http://localhost:8346/api/v1/management/delete/all"
 ```
 
