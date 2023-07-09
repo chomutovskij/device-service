@@ -33,9 +33,16 @@ curl -X GET -H "Content-Type: application/json" "http://localhost:8346/api/v1/in
 ```
 
 ### Reserving and returning the device:
+#### using the device name
 ```
 curl -X PUT -H "Content-Type: application/json" -d '{"person": "Andrej", "deviceName": "Nokia 3310"}' "http://localhost:8346/api/v1/booking/reserve"
 curl -X PUT -H "Content-Type: application/json" -d '{"person": "Andrej", "deviceName": "Nokia 3310"}' "http://localhost:8346/api/v1/booking/return"
+```
+
+#### using the device ID
+```
+curl -X PUT -H "Content-Type: application/json" -d '{"person": "Andrej", "deviceId": 10}' "http://localhost:8346/api/v1/booking/reserve"
+curl -X PUT -H "Content-Type: application/json" -d '{"person": "Andrej", "deviceId": 10}' "http://localhost:8346/api/v1/booking/return" 
 ```
 
 ### Tools and Libraries
