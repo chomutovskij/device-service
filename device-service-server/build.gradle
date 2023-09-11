@@ -6,7 +6,6 @@ dependencies {
     compileOnly 'org.immutables:value::annotations'
 
     implementation project(':device-service-api:device-service-api-objects')
-    implementation project(':device-service-api:device-service-api-jersey')
     implementation project(':device-service-api:device-service-api-undertow')
 
     implementation 'com.palantir.conjure.java:conjure-java-undertow-runtime'
@@ -15,15 +14,10 @@ dependencies {
     implementation 'com.google.guava:guava'
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
-    implementation 'com.palantir.conjure.java.runtime:conjure-java-jackson-serialization'
-    implementation 'com.palantir.conjure.java.runtime:conjure-java-jersey-server'
     implementation 'com.palantir.conjure.java.runtime:keystores'
     implementation 'com.palantir.conjure.java.api:ssl-config'
 
-    implementation "org.slf4j:slf4j-simple"
-    implementation 'org.slf4j:slf4j-api'
-
-    implementation 'org.xerial:sqlite-jdbc'
+    runtimeOnly 'org.xerial:sqlite-jdbc'
     implementation 'com.zaxxer:HikariCP'
     implementation 'org.apache.commons:commons-lang3'
     implementation 'com.squareup.okhttp3:okhttp'
@@ -31,10 +25,10 @@ dependencies {
     implementation 'com.github.ben-manes.caffeine:caffeine'
     implementation 'com.opencsv:opencsv:5.5.2'
 
-    testImplementation 'junit:junit'
-    testImplementation 'org.assertj:assertj-core'
-    testImplementation 'com.palantir.conjure.java.runtime:conjure-java-jaxrs-client'
+    testImplementation project(':device-service-api:device-service-api-dialogue')
+    testImplementation 'com.palantir.dialogue:dialogue-clients'
     testImplementation 'com.palantir.conjure.java.api:test-utils'
+    testImplementation 'org.assertj:assertj-core'
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
 

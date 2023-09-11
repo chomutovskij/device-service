@@ -22,16 +22,16 @@ import com.achomutovskij.deviceservice.api.BookingErrors;
 import com.achomutovskij.deviceservice.api.BookingRequest;
 import com.achomutovskij.deviceservice.api.DeviceErrors;
 import com.achomutovskij.deviceservice.api.DeviceInfo;
-import com.achomutovskij.deviceservice.booking.api.DeviceBookingService;
-import com.achomutovskij.deviceservice.info.api.DeviceInfoService;
-import com.achomutovskij.deviceservice.management.api.DeviceManagementService;
+import com.achomutovskij.deviceservice.booking.api.DeviceBookingServiceBlocking;
+import com.achomutovskij.deviceservice.info.api.DeviceInfoServiceBlocking;
+import com.achomutovskij.deviceservice.management.api.DeviceManagementServiceBlocking;
 import com.google.common.collect.ImmutableList;
 import com.palantir.conjure.java.api.config.service.UserAgent;
+import com.palantir.conjure.java.api.config.service.UserAgent.Agent;
 import com.palantir.conjure.java.api.testing.Assertions;
 import com.palantir.conjure.java.client.config.ClientConfiguration;
 import com.palantir.conjure.java.client.config.ClientConfigurations;
-import com.palantir.conjure.java.client.jaxrs.JaxRsClient;
-import com.palantir.conjure.java.okhttp.NoOpHostEventsSink;
+import com.palantir.dialogue.clients.DialogueClients;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import io.undertow.Undertow;
@@ -64,9 +64,9 @@ import org.junit.jupiter.api.Test;
 
 public class DeviceServiceApplicationTest {
 
-    private static DeviceManagementService deviceManagementService;
-    private static DeviceInfoService deviceInfoService;
-    private static DeviceBookingService deviceBookingService;
+    private static DeviceManagementServiceBlocking deviceManagementService;
+    private static DeviceInfoServiceBlocking deviceInfoService;
+    private static DeviceBookingServiceBlocking deviceBookingService;
 
     private static Undertow server;
 
@@ -98,26 +98,14 @@ public class DeviceServiceApplicationTest {
         sslContext.init(null, trustManager, null);
 
         ClientConfiguration clientConfig = ClientConfigurations.of(
-                ImmutableList.of("https://localhost:8345/api/"), sslContext.getSocketFactory(), (X509TrustManager)
-                        trustManager[0]);
+                ImmutableList.of("https://localhost:8345/api/"),
+                sslContext.getSocketFactory(),
+                (X509TrustManager) trustManager[0],
+                UserAgent.of(Agent.of("device-service-client-test", "0.0.0")));
 
-        deviceManagementService = JaxRsClient.create(
-                DeviceManagementService.class,
-                UserAgent.of(UserAgent.Agent.of("test", "0.0.0")),
-                NoOpHostEventsSink.INSTANCE,
-                clientConfig);
-
-        deviceInfoService = JaxRsClient.create(
-                DeviceInfoService.class,
-                UserAgent.of(UserAgent.Agent.of("test", "0.0.0")),
-                NoOpHostEventsSink.INSTANCE,
-                clientConfig);
-
-        deviceBookingService = JaxRsClient.create(
-                DeviceBookingService.class,
-                UserAgent.of(UserAgent.Agent.of("test", "0.0.0")),
-                NoOpHostEventsSink.INSTANCE,
-                clientConfig);
+        deviceManagementService = DialogueClients.create(DeviceManagementServiceBlocking.class, clientConfig);
+        deviceInfoService = DialogueClients.create(DeviceInfoServiceBlocking.class, clientConfig);
+        deviceBookingService = DialogueClients.create(DeviceBookingServiceBlocking.class, clientConfig);
 
         deviceManagementService.deleteAllDevices();
     }

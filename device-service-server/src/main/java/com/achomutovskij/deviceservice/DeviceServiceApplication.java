@@ -50,6 +50,9 @@ public final class DeviceServiceApplication {
     private static final String TRUSTSTORE_PATH = "src/test/resources/certs/truststore.jks";
     private static final String KEYSTORE_PASSWORD = "changeit";
 
+    public static final SslConfiguration SSL_CONFIG =
+            SslConfiguration.of(Paths.get(TRUSTSTORE_PATH), Paths.get(KEY_STORE_PATH), KEYSTORE_PASSWORD);
+
     public static final String SQLITE_URL = "jdbc:sqlite:src/test/resources/database.db";
     private static final String DEVICE_INFO_CSV = "src/test/resources/gsmarena_dataset.csv";
 
@@ -72,9 +75,7 @@ public final class DeviceServiceApplication {
 
         GsmArenaDataProvider gsmArenaDataProvider = new GsmArenaDataProvider(DEVICE_INFO_CSV);
 
-        SslConfiguration sslConfig =
-                SslConfiguration.of(Paths.get(TRUSTSTORE_PATH), Paths.get(KEY_STORE_PATH), KEYSTORE_PASSWORD);
-        SSLContext sslContext = SslSocketFactories.createSslContext(sslConfig);
+        SSLContext sslContext = SslSocketFactories.createSslContext(SSL_CONFIG);
 
         Optional<RapidApiClient> rapidApiClientOptional = conf.getApiKey()
                 .filter(apiKey -> !Strings.isNullOrEmpty(apiKey))
