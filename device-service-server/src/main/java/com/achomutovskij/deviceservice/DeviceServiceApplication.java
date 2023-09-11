@@ -46,8 +46,8 @@ public final class DeviceServiceApplication {
 
     private static final SafeLogger log = SafeLoggerFactory.get(DeviceServiceApplication.class);
 
-    private static final String KEY_STORE_PATH = "src/test/resources/certs/keystore.jks";
-    private static final String TRUSTSTORE_PATH = "src/test/resources/certs/truststore.jks";
+    private static final String KEY_STORE_PATH = "var/certs/keystore.jks";
+    private static final String TRUSTSTORE_PATH = "var/certs/truststore.jks";
     private static final String KEYSTORE_PASSWORD = "changeit";
 
     public static final SslConfiguration SSL_CONFIG =

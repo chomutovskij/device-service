@@ -82,7 +82,7 @@ public class DeviceServiceApplicationTest {
                 .apiKey(Optional.empty()) // don't contact the external API in these tests
                 .build());
 
-        File crtFile = new File("src/test/resources/certs/ca-cert");
+        File crtFile = new File("var/certs/ca-cert");
         Certificate certificate =
                 CertificateFactory.getInstance("X.509").generateCertificate(new FileInputStream(crtFile));
         KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
