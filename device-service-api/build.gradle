@@ -21,5 +21,8 @@ conjure {
 
     java {
         undertowServicePrefixes = true
+        useImmutableBytes = true
+        strictObjects = true
+        nonNullCollections = true
     }
 }

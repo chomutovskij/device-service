@@ -2,6 +2,7 @@ rootProject.name = 'device-service'
 
 include 'device-service-server'
 include 'device-service-api'
+include 'device-service-api:device-service-api-dialogue'
 include 'device-service-api:device-service-api-undertow'
 include 'device-service-api:device-service-api-objects'
 include 'device-service-api:device-service-api-jersey'
