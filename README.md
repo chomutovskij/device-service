@@ -60,7 +60,7 @@ This service uses the following tools and libraries, please consult their respec
 * [gradle](https://gradle.org/) - a highly flexible build tool. Some of the gradle plugins applied are:
      *  [gradle-conjure](https://github.com/palantir/gradle-conjure) - a gradle plugin that contains tasks to generate conjure bindings.
      *  [gradle-baseline](https://github.com/palantir/gradle-baseline) - a gradle plugin for configuring code quality tools in builds and projects.
-* [dropwizard](https://www.dropwizard.io/en/stable/) - a simple framework for building web services
+* [undertow](https://undertow.io/) - a simple framework for building web services
 
 ### Project Structure
 
@@ -88,7 +88,7 @@ This service uses the following tools and libraries, please consult their respec
     * `device-service-api-typescript` - the sub-project where all generated typescript bindings live.
     * `src/main/conjure` - directory containing conjure definition yml files where recipe APIs are defined, please refer to [specification.md](https://github.com/palantir/conjure/blob/develop/docs/specification.md) for more details.
 
-* `device-service-server` - a dropwizard application project that uses conjure generated jersey binding for resource class implementation
+* `device-service-server` - an Undertow application project that uses conjure generated jersey binding for resource class implementation
 
     This is what the server project looks like:
     ```
@@ -102,9 +102,9 @@ This service uses the following tools and libraries, please consult their respec
     │           └── conf.yml
     ```
     * `build.gradle` - configures the project with needed dependencies and applies the `gradle-conjure` and `application plugins`, so we can run the server locally or in IDE.
-    * `src/main/java` - source classes for the dropwizard application. e.g. `DeviceBookingResource.java` class `implements` the generated Undertow interface.
+    * `src/main/java` - source classes for the Undertow application. e.g. `DeviceBookingResource.java` class `implements` the generated Undertow interface.
     * `test/main/java` - test source classes for simple integration tests that uses generated jersey interface for client interaction.
-    * `var/conf/conf.yml` - the dropwizard application configuration yml file
+    * `var/conf/conf.yml` - the Undertow application configuration yml file
 
 * `build.gradle` - the root level gradle script where a set of gradle plugins are configured, including [gradle-conjure](https://github.com/palantir/gradle-conjure).
 * `settings.gradle` - the gradle settings file where all sub projects are configured.
