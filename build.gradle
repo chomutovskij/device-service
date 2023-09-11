@@ -16,14 +16,14 @@ buildscript {
     }
 }
 
+apply plugin: 'com.palantir.baseline'
 apply plugin: 'com.palantir.external-publish'
 apply plugin: 'com.palantir.consistent-versions'
-apply plugin: 'com.palantir.baseline'
 apply plugin: 'com.palantir.git-version'
 
 allprojects {
     apply plugin: 'com.palantir.java-format'
-    group 'com.palantir.conjure.examples'
+    group 'com.achomutovskij.deviceservice'
     version gitVersion()
 
     repositories {

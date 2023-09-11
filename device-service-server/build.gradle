@@ -1,4 +1,5 @@
 apply plugin: 'application'
+apply plugin: 'com.palantir.baseline-class-uniqueness'
 
 dependencies {
     annotationProcessor 'org.immutables:value'
@@ -19,17 +20,15 @@ dependencies {
     implementation 'com.palantir.conjure.java.runtime:keystores'
     implementation 'com.palantir.conjure.java.api:ssl-config'
 
-    compile "org.slf4j:slf4j-simple"
+    implementation "org.slf4j:slf4j-simple"
     implementation 'org.slf4j:slf4j-api'
 
     implementation 'org.xerial:sqlite-jdbc'
     implementation 'com.zaxxer:HikariCP'
     implementation 'org.apache.commons:commons-lang3'
-    // implementation 'com.aafanasev:fonoapi-rxjava' // this dependency is no longer available
     implementation 'com.squareup.okhttp3:okhttp'
     implementation 'com.google.code.gson:gson'
     implementation 'com.github.ben-manes.caffeine:caffeine'
-
     implementation 'com.opencsv:opencsv:5.5.2'
 
     testImplementation 'junit:junit'
