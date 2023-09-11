@@ -53,8 +53,8 @@ public final class DeviceServiceApplication {
     public static final SslConfiguration SSL_CONFIG =
             SslConfiguration.of(Paths.get(TRUSTSTORE_PATH), Paths.get(KEY_STORE_PATH), KEYSTORE_PASSWORD);
 
-    public static final String SQLITE_URL = "jdbc:sqlite:src/test/resources/database.db";
-    private static final String DEVICE_INFO_CSV = "src/test/resources/gsmarena_dataset.csv";
+    public static final String SQLITE_URL = "jdbc:sqlite:var/db/database.db";
+    private static final String DEVICE_INFO_CSV = "var/gsmarena_data/gsmarena_dataset.csv";
 
     private DeviceServiceApplication() {}
 

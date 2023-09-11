@@ -7,12 +7,15 @@ DEST=build/docker
 
 rm -rf $DEST
 mkdir -p $DEST/device-service-server/var/conf
+mkdir -p $DEST/device-service-server/var/db
+mkdir -p $DEST/device-service-server/var/gsmarena_data
 
 cp ./scripts/Dockerfile $DEST/
 tar -xf "./device-service-server/build/distributions/device-service-server-${VERSION}.tar" -C $DEST/device-service-server --strip-components=1
 cp ./device-service-server/var/conf/conf.yml $DEST/device-service-server/var/conf
+cp ./device-service-server/var/db/database.db $DEST/device-service-server/var/db
+cp ./device-service-server/var/gsmarena_data/gsmarena_dataset.csv $DEST/device-service-server/var/gsmarena_data
 
 cd $DEST
-docker build -t "palantirtechnologies/device-service-server:$VERSION" .
-docker tag "palantirtechnologies/device-service-server:$VERSION" "palantirtechnologies/device-service-server:latest"
-
+docker build -t "chomutovskij/device-service-server:$VERSION" .
+docker tag "chomutovskij/device-service-server:$VERSION" "chomutovskij/device-service-server:latest"
