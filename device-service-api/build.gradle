@@ -1,5 +1,12 @@
 apply plugin: 'com.palantir.conjure'
 
+configure(subprojects - project('device-service-api-typescript')) {
+    dependencies {
+        implementation 'com.palantir.conjure.java:conjure-lib'
+        implementation 'com.fasterxml.jackson.core:jackson-databind'
+    }
+}
+
 project (':device-service-api:device-service-api-typescript') {
     publishTypeScript.doFirst {
         file('src/.npmrc') << "//registry.npmjs.org/:_authToken=${System.env.NPM_AUTH_TOKEN}"
