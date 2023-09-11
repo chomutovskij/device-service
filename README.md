@@ -70,22 +70,23 @@ This service uses the following tools and libraries, please consult their respec
     ```
     ├── device-service-api
     │   ├── build.gradle
-    │   ├── device-service-api-jersey
+    │   ├── device-service-api-dialogue
     │   ├── device-service-api-objects
     │   ├── device-service-api-typescript
+    │   ├── device-service-api-undertow
     │   └── src
     │       └── main
     │           └── conjure
     │               └── device-service-api.yml
     ```
-    * build.gradle - a gradle script that 
-        1. configures sub-projects with needed dependencies to generate java bindings. e.g. `device-service-api-jersey`
+    * `build.gradle` - a gradle script that 
+        1. configures sub-projects with needed dependencies to generate java bindings. e.g. `device-service-api-dialogue`
         2. configures `publishTypescript` task to generate `.npmrc` in the generated root folder, `device-service-api-typescript/src` for publishing the generated npm module.
         3. modifies the `conjure` extension to specify the package name under which the npm module will be published.
-    * device-service-api-jersey - the sub-project where all generated [service interfaces](device-service-api/src/main/conjure/device-service-api.yml#L51) live.
-    * device-service-api-objects - the sub-project where all generated [object classes](device-service-api/src/main/conjure/device-service-api.yml#L4) live.
-    * device-service-api-typescript - the sub-project where all generated typescript bindings live.
-    * src/main/conjure - directory containing conjure definition yml files where recipe APIs are defined, please refer to [specification.md](https://github.com/palantir/conjure/blob/develop/docs/specification.md) for more details.
+    * `device-service-api-dialogue` - the sub-project where all generated [service interfaces](device-service-api/src/main/conjure/device-service-api.yml#L51) live.
+    * `device-service-api-objects` - the sub-project where all generated [object classes](device-service-api/src/main/conjure/device-service-api.yml#L4) live.
+    * `device-service-api-typescript` - the sub-project where all generated typescript bindings live.
+    * `src/main/conjure` - directory containing conjure definition yml files where recipe APIs are defined, please refer to [specification.md](https://github.com/palantir/conjure/blob/develop/docs/specification.md) for more details.
 
 * `device-service-server` - a dropwizard application project that uses conjure generated jersey binding for resource class implementation
 
@@ -100,14 +101,14 @@ This service uses the following tools and libraries, please consult their respec
     │       └── conf
     │           └── conf.yml
     ```
-    * build.gradle - configures the project with needed dependencies and applies the `gradle-conjure` and `application plugins`, so we can run the server locally or in IDE.
-    * src/main/java - source classes for the dropwizard application. e.g. RecipeBookResource.java class `implements` the generated Jersey interface.
-    * test/main/java - test source classes for simple integration tests that uses generated jersey interface for client interaction.
-    * var/conf/conf.yml - the dropwizard application configuration yml file
+    * `build.gradle` - configures the project with needed dependencies and applies the `gradle-conjure` and `application plugins`, so we can run the server locally or in IDE.
+    * `src/main/java` - source classes for the dropwizard application. e.g. `DeviceBookingResource.java` class `implements` the generated Undertow interface.
+    * `test/main/java` - test source classes for simple integration tests that uses generated jersey interface for client interaction.
+    * `var/conf/conf.yml` - the dropwizard application configuration yml file
 
-* build.gradle - the root level gradle script where a set of gradle plugins are configured, including [gradle-conjure](https://github.com/palantir/gradle-conjure).
-* settings.gradle - the gradle settings file where all sub projects are configured.
-* versions.props - a property file of the [nebula version recommender plugin](https://github.com/nebula-plugins/nebula-dependency-recommender-plugin) with which we can specify versions of project dependencies, including conjure generators.
+* `build.gradle` - the root level gradle script where a set of gradle plugins are configured, including [gradle-conjure](https://github.com/palantir/gradle-conjure).
+* `settings.gradle` - the gradle settings file where all sub projects are configured.
+* `versions.props` - a property file of the [nebula version recommender plugin](https://github.com/nebula-plugins/nebula-dependency-recommender-plugin) with which we can specify versions of project dependencies, including conjure generators.
 
 ## Development
 
