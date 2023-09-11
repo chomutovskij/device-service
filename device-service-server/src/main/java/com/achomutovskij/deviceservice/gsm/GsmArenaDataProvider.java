@@ -54,14 +54,7 @@ public final class GsmArenaDataProvider {
                     throw new ServiceException(ErrorType.INTERNAL, ex);
                 }
 
-                dataMap.put(
-                        nextLine[0],
-                        ImmutableGsmNetworkDetails.builder()
-                                .technology(nextLine[1])
-                                .twoGBands(nextLine[2])
-                                .threeGBands(nextLine[4])
-                                .fourGBands(nextLine[6])
-                                .build());
+                dataMap.put(nextLine[0], new GsmNetworkDetails(nextLine[1], nextLine[2], nextLine[4], nextLine[6]));
             }
         } catch (IOException ex) {
             throw new ServiceException(ErrorType.INTERNAL, ex);

@@ -87,12 +87,11 @@ public final class RapidApiClient {
             Optional<JsonObject> gsmNetworkDetailsOptional =
                     Optional.ofNullable(jsonObject.get("gsmNetworkDetails")).map(JsonElement::getAsJsonObject);
 
-            return gsmNetworkDetailsOptional.map(gsmNetworkDetails -> ImmutableGsmNetworkDetails.builder()
-                    .technology(getStringWithKey(gsmNetworkDetails, "networkTechnology"))
-                    .twoGBands(getStringWithKey(gsmNetworkDetails, "network2GBands"))
-                    .threeGBands(getStringWithKey(gsmNetworkDetails, "network3GBands"))
-                    .fourGBands(getStringWithKey(gsmNetworkDetails, "network4GBands"))
-                    .build());
+            return gsmNetworkDetailsOptional.map(gsmNetworkDetails -> new GsmNetworkDetails(
+                    getStringWithKey(gsmNetworkDetails, "networkTechnology"),
+                    getStringWithKey(gsmNetworkDetails, "network2GBands"),
+                    getStringWithKey(gsmNetworkDetails, "network3GBands"),
+                    getStringWithKey(gsmNetworkDetails, "network4GBands")));
         } catch (IOException | RuntimeException e) {
             log.error("Failed to get or parse the response from Rapid API", e);
             return Optional.empty();
