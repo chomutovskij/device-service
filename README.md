@@ -88,7 +88,7 @@ This service uses the following tools and libraries, please consult their respec
     * `device-service-api-typescript` - the sub-project where all generated typescript bindings live.
     * `src/main/conjure` - directory containing conjure definition yml files where recipe APIs are defined, please refer to [specification.md](https://github.com/palantir/conjure/blob/develop/docs/specification.md) for more details.
 
-* `device-service-server` - an Undertow application project that uses conjure generated jersey binding for resource class implementation
+* `device-service-server` - an Undertow application project that uses conjure generated Undertow binding for resource class implementation
 
     This is what the server project looks like:
     ```
