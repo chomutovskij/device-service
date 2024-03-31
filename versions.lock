@@ -1,10 +1,10 @@
 # Run ./gradlew writeVersionsLock to regenerate this file
 com.fasterxml.jackson.core:jackson-annotations:2.17.0 (8 constraints: 9e8ffe88)
-com.fasterxml.jackson.core:jackson-core:2.17.0 (13 constraints: 021f4cac)
-com.fasterxml.jackson.core:jackson-databind:2.17.0 (18 constraints: 2c70db59)
+com.fasterxml.jackson.core:jackson-core:2.17.0 (13 constraints: 021f50ac)
+com.fasterxml.jackson.core:jackson-databind:2.17.0 (18 constraints: 2c70df59)
 com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.15.3 (1 constraints: 811ca2a4)
 com.fasterxml.jackson.dataformat:jackson-dataformat-smile:2.15.3 (1 constraints: 811ca2a4)
-com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.2 (1 constraints: 3c05403b)
+com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.17.0 (1 constraints: 3c05443b)
 com.fasterxml.jackson.datatype:jackson-datatype-guava:2.15.3 (1 constraints: 811ca2a4)
 com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.15.3 (1 constraints: 811ca2a4)
 com.fasterxml.jackson.datatype:jackson-datatype-joda:2.15.3 (1 constraints: 811ca2a4)
@@ -68,7 +68,7 @@ org.slf4j:slf4j-api:2.0.12 (8 constraints: 2b7f7ed6)
 org.wildfly.client:wildfly-client-config:1.0.1.Final (1 constraints: 940c6308)
 org.wildfly.common:wildfly-common:1.7.0.Final (3 constraints: 203237d9)
 org.xerial:sqlite-jdbc:3.43.0.0 (1 constraints: 9a054e46)
-org.yaml:snakeyaml:2.0 (1 constraints: 3a178910)
+org.yaml:snakeyaml:2.2 (1 constraints: 3c178b10)
 
 [Test dependencies]
 com.palantir.conjure.java.api:service-config:2.51.0 (4 constraints: 2d48d74a)
