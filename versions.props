@@ -14,7 +14,7 @@ org.immutables:* = 2.10.1
 org.slf4j:* = 2.0.12
 
 org.xerial:sqlite-jdbc = 3.43.0.0
-com.zaxxer:HikariCP = 5.0.1
+com.zaxxer:HikariCP = 5.1.0
 org.apache.commons:commons-lang3 = 3.14.0
 
 com.squareup.okhttp3:okhttp = 4.12.0
