@@ -1,5 +1,5 @@
 com.fasterxml.jackson.core:jackson-databind = 2.17.1
-com.fasterxml.jackson.dataformat:jackson-dataformat-yaml = 2.17.0
+com.fasterxml.jackson.dataformat:jackson-dataformat-yaml = 2.17.1
 com.palantir.dialogue:* = 3.129.0
 com.google.guava:guava = 33.2.0-jre
 com.palantir.conjure:conjure = 4.38.0
