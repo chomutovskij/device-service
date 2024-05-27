@@ -13,7 +13,7 @@ org.junit.jupiter:* = 5.10.2
 org.immutables:* = 2.10.1
 org.slf4j:* = 2.0.13
 
-org.xerial:sqlite-jdbc = 3.45.3.0
+org.xerial:sqlite-jdbc = 3.46.0.0
 com.zaxxer:HikariCP = 5.1.0
 org.apache.commons:commons-lang3 = 3.14.0
 
